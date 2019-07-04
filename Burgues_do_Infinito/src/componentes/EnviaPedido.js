@@ -26,9 +26,19 @@ export default class EnviaPedido extends React.Component {
     }
     _enviarPedido(){
         if(this.state.tipoPagamento!=0){
-            var novoPedido = firebase.database().ref('pedidos/').push()
+            
+            var novoPedido = firebase.database().ref('pedidos/').push(), codigoGeral = firebase.database().ref('codigoGeral'), codigoGeralValor;
+            codigoGeral.once('value', (snapshort) => {
+                if(snapshort.val()==null || snapshort.val()==''){     
+                    codigoGeralValor = 001;
+                }else{
+                    codigoGeralValor=snapshort.val();
+                }
+                codigoGeral.set(codigoGeralValor++);
+            })
             novoPedido.set({
                 id: novoPedido.key,
+                codigo: codigoGeralValor,
                 aberto: true,
                 qtd_manopla: this.state.qtd_manopla,
                 qtd_alma: this.state.qtd_alma,

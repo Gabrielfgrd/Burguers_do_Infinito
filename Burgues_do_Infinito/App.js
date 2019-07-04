@@ -23,11 +23,10 @@ export default class Estagio extends Component{
     firebase.initializeApp(firebaseConfig);
 	}
   render() {
-    //   <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
-	// 		<Routes />
-	// 	</Provider>
     return (
-		<Routes />
+      <Provider store={createStore(reducers, {}, applyMiddleware(ReduxThunk))}>
+			<Routes />
+	 	</Provider>
     );
   }
 }
